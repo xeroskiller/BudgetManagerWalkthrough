@@ -1,3 +1,4 @@
+// Ensure models are instantiated
 const mongoose = require('mongoose'),
     UserModel = require('@BudgetManagerModels/user');
 
