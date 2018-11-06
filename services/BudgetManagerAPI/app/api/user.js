@@ -43,3 +43,5 @@ api.singup = (User) => (req, res) => {
         })
     }
 }
+
+module.exports = api;
