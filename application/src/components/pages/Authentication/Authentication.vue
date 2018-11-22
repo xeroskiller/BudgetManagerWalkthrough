@@ -1,7 +1,7 @@
 <template>
-    <h1>Auth!</h1>
+  <h1>Auth!</h1>
 </template>
 
 <script>
-    export default {}
+export default {}
 </script>
