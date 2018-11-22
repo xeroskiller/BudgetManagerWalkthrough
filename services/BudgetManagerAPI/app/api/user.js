@@ -4,16 +4,20 @@ const api = {};
 
 api.setup = (User) => (req, res) => {
     const admin = new User({
-        username: 'testAdmin',
-        password: 'testPassword',
+        username: 'admin',
+        password: 'password',
         clients: [] // with security like this, who can blame them?!
     }); 
 
     admin.save(error => {
-        if (error) throw error;
-
-        console.log('Admin account was successfully set up');
-        res.json({ succes: true });
+        if (error) 
+        {
+            console.log('Error encountered saving admin.');
+            res.json({ success: false })
+        } else {
+            console.log('Admin account was successfully set up');
+            res.json({ success: true });
+        }
     })
 }
 
