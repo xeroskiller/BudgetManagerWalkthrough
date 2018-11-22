@@ -2,11 +2,12 @@
   <div class="l-auth-container">
     <div class="l-auth">
       <v-form v-model="validLogin">
-        <v-text-field label="Username" 
-                      v-model="credentials.username" 
-                      repend-icon="account_box" 
-                      :rules="rules" 
-                      required color="light-blue lighten-1">
+        <v-text-field label="Username"
+                      v-model="credentials.username"
+                      repend-icon="account_box"
+                      :rules="rules"
+                      required
+                      color="light-blue lighten-1">
         </v-text-field>
 
         <v-text-field label="Password"
@@ -62,7 +63,7 @@
 <script>
 import Authentication from '@/components/pages/Authentication'
 export default {
-  data () {
+  data() {
     return {
       // Flag to display snackbar, which renders auth messages
       snackbar: false, 
