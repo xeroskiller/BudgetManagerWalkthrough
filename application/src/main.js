@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import VueCookie from 'vue-cookie'
 import Vuetify from 'vuetify'
-import('../node_modules/vuetify/dist/cuetify.min.css')
+import('../node_modules/vuetify/dist/vuetify.min.css')
 
 Vue.use(VueCookie)
 Vue.use(Vuetify)
