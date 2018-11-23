@@ -4,10 +4,10 @@
       <v-form v-model="validLogin">
         <v-text-field label="Username"
                       v-model="credentials.username"
-                      repend-icon="account_box"
+                      prepend-icon="account_box"
                       :rules="rules"
                       required
-                      color="light-blue lighten-1">
+                      color="teal lighten-1">
         </v-text-field>
 
         <v-text-field label="Password"
@@ -15,25 +15,25 @@
                       prepend-icon="lock"
                       :rules="rules"
                       :append-icon="loginPasswordVisible ? 'visibility' : 'visibility_off'"
-                      :append-icon-cb="() => (loginPasswordVisible = !loginPasswordVisible)"
-                      :type="loginPasswordVisible ? 'test' : 'password'"
-                      color="light-blue lighten-1"
+                      @click:append="() => (loginPasswordVisible = !loginPasswordVisible)"
+                      :type="loginPasswordVisible ? 'text' : 'password'"
+                      color="teal lighten-1"
                       required>
         </v-text-field>
 
-        <v-btn flat color="light-blue lighten-1" @click.native="signUpVisible = true">Create Account</v-btn>
-        <v-btn color="light-blue lighten-1" @click.native="submitAuthentication()">Login</v-btn>
+        <v-btn block flat color="teal lighten-1" @click.native="signUpVisible = true">Create account</v-btn>
+        <v-btn block color="teal lighten-1" @click.native="submitAuthentication()">Login</v-btn>
       </v-form>
     </div>
 
     <div class="l-signup" v-if="signUpVisible">
       <v-form v-model="validSignUp">
         <v-text-field label="Username"
-                      v-model="newUSer.username"
+                      v-model="newUser.username"
                       prepend-icon="account_box"
                       :rules="rules"
                       required
-                      color="light-blue lighten-1">
+                      color="teal lighten-1">
         </v-text-field>
 
         <v-text-field label="Password"
@@ -41,17 +41,17 @@
                       prepend-icon="lock"
                       :rules="rules"
                       :append-icon="signUpPasswordVisible ? 'visibility' : 'visibility_off'"
-                      :append-icon-cb="() => (signUpPasswordVisible = !signUpPasswordVisible)"
+                      @click:append="() => (signUpPasswordVisible = !signUpPasswordVisible)"
                       :type="signUpPasswordVisible ? 'text' : 'password'"
-                      color="light-blue lighten-1"
-                      required>          
+                      color="teal lighten-1"
+                      required>
         </v-text-field>
-        
-        <v-btn block color="light-blue lighten-1" @click.native="submitSignUp()">Sign Up</v-btn>
+
+        <v-btn block color="teal lighten-1" @click.native="submitSignUp()">Sign Up</v-btn>
       </v-form>
     </div>
 
-    <v-snackbar timeout="6000"
+    <v-snackbar :timeout="timeout"
                 bottom="bottom"
                 color="red lighten-1"
                 v-model="snackbar">
@@ -63,42 +63,31 @@
 <script>
 import Authentication from '@/components/pages/Authentication'
 export default {
-  data() {
+  data () {
     return {
-      // Flag to display snackbar, which renders auth messages
-      snackbar: false, 
-      // Flag to indicate valid login
-      validLogin: false, 
-      // Flag to indicate valid signup 
-      validSignUp: false, 
-      // Flag to toggle sign up visibility
-      signUpVisible: false, 
-      // Flag to toggle visibility of login password
-      loginPasswordVisible: false, 
-      // Flag to toggle visibility of signup password
-      signUpPasswordVisible: false, 
-      // Validation rules for all fields (lazy)
-      rules: [ (value) => !!value || 'This field is required' ], 
-      // Login creds
+      snackbar: false,
+      validLogin: false,
+      validSignUp: false,
+      signUpVisible: false,
+      loginPasswordVisible: false,
+      signUpPasswordVisible: false,
+      timeout: 6000,
+      rules: [ (value) => !!value || 'This field is required' ],
       credentials: {
         username: '',
         password: ''
       },
-      // Signup creds
       newUser: {
         username: '',
         password: ''
       },
-      // Snackbar message
       message: ''
     }
   },
   methods: {
-    // Pipeline auth to component that handles it
     submitAuthentication () {
       Authentication.authenticate(this, this.credentials, '/')
     },
-    // Same for signup
     submitSignUp () {
       Authentication.signup(this, this.newUser, '/')
     }
@@ -108,22 +97,19 @@ export default {
 
 <style lang="scss">
   @import "./../../../assets/styles";
-
   .l-auth {
     background-color: $background-color;
     padding: 15px;
     margin: 45px auto;
     min-width: 272px;
-    max-width: 320-px;
-    animation: bounceIn 1s forwards ease;
-  }
-
-  .l-signup {
-    background-color: $background-color;
-    padding: 15px;
-    margin: 45px auto;
-    min-width: 272px;
     max-width: 320px;
+    animation: bounceIn 1s forwards ease;
+    label, input, .icon {
+      color: #26A69A!important;
+    }
+  }
+  .l-signup {
+    @extend .l-auth;
     animation: slideInFromLeft 1s forwards ease;
   }
 </style>
