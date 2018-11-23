@@ -3,7 +3,7 @@ module.exports = (mongoose, config) => {
     mongoose.Promise = Promise;
 
     mongoose.connect(config.database, {
-        useMongoClient: true,
+        useNewUrlParser: true,
         promiseLibrary: global.Promise
     });
 
@@ -11,8 +11,8 @@ module.exports = (mongoose, config) => {
         console.log(`Connection to BudgetManager database failed: ${error}`)
         );
 
-    database.on('connected', () 
-        => console.log('Connected to BudgetManager database.')
+    database.on('connected', () => 
+        console.log('Connected to BudgetManager database.')
         );
 
     database.on('disconnected', () => 
@@ -23,6 +23,6 @@ module.exports = (mongoose, config) => {
         database.close(() => {
             console.log('BudgetManager terminated, connection closed');
             process.exit(0);
-        })
+        });
     });
 };
