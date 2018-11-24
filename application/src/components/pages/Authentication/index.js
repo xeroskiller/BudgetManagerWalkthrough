@@ -8,37 +8,42 @@ export default {
 
   authenticate (context, credentials, redirect) {
     Axios.post(`${BudgetManagerAPI}/api/v1/auth`, credentials)
-      .then(({data: {token}}) => {
-        context.$cookie.set('token', token, '1D')
+      .then(({data}) => {
+        context.$cookie.set('token', data.token, '1D')
+        context.$cookie.set('user_id', data.user._id, '1D')
         context.validLogin = true
+
         this.user.authenticated = true
 
         if (redirect) router.push(redirect)
+      }).catch(({response: {data}}) => {
+        context.snackbar = true
+        context.message = data.message
+      })
+},
+
+  signup (context, credentials, redirect) {
+    Axios.post(`${BudgetManagerAPI}/api/v1/signup`, credentials)
+      .then(() => {
+        context.validSignUp = true
+        this.authenticate(context, credentials, redirect)
       }).catch(({response: {data}}) => {
         context.snackbar = true
         context.message = data.message
       })
   },
 
-  signup (context, credentials, redirect) {
-    Axios.post(`${BudgetManagerAPI}/api/v1/signup`, credentials)
-      .then(({data: {token}}) => {
-        context.$cookie.set('token', token, '1D')
-        context.validSignUp = true
-        this.user.authenticated = true
+  signout (context, redirect) {
+    context.$cookie.delete('token')
+    context.$cookie.delete('user_id')
+    this.user.authenticated = false
 
-        if (redirect) router.push(redirect)
-      }).catch(({response: {data}}) => {
-        context.snackbar = true
-        context.message = data.message
-      })
+    if (redirect) router.push(redirect)
   },
 
   checkAuthentication () {
     const token = document.cookie
-
-    if (token) this.user.authenticated = true
-    else this.user.authenticated = false
+    this.user.token = !!token
   },
 
   getAuthenticationHeader (context) {

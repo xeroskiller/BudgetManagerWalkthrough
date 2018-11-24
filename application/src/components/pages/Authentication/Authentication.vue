@@ -107,6 +107,11 @@ export default {
     label, input, .icon {
       color: #26A69A!important;
     }
+    .input-group__details {
+      &:before {
+        background-color: border-color-input !important;
+      }
+    }
   }
   .l-signup {
     @extend .l-auth;
