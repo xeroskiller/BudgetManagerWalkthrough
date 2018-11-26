@@ -1,0 +1,13 @@
+FROM mhart/alpine-node:10
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --prod
+
+FROM alpine3:7
+COPY --from=0 /usr/bin/node /usr/bin/
+COPY --from=0 /usr/lib/libgcc* /usr/lib/libstdc* /usr/lib/
+WORKDIR /app
+COPY --from=0 /app .
+COPY . .
+EXPOSE 3000
+CMD ["node", "index.js"]
